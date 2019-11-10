@@ -45,17 +45,17 @@
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->address }}</td>
                                             <td>{{ $user->phone }}</td>
-                                            <td>{{ $user->avatar }}</td>
+                                            <td><img style="width: 100px; height: 100px;" src="{{ $user->avatar }}" alt=""></td>
                                             <td>{{ $user->birthday }}</td>
                                             <td>
-                                                @if ($user->level = 1)
+                                                @if ($user->role == 1)
                                                     User
                                                 @else
                                                     Admin
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="#" class="btn btn-warning"><i class="fa fa-pencil"
+                                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning"><i class="fa fa-pencil"
                                                         aria-hidden="true"></i> Sửa</a>
                                                 <a href="#" class="btn btn-danger"><i class="fa fa-trash"
                                                         aria-hidden="true"></i> Xóa</a>

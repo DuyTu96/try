@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -35,9 +36,35 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $password = $request->password;
+        $repassword = $request->repassword;
+        if ($password == $repassword) {
+            $users = New User;
+            $attr = [
+                'name' => $request->get('name'),
+                'email' => $request->get('email'),
+                'password' => bcrypt($request->get('password')),
+                'address' => $request->get('address'),
+                'phone' => $request->get('phone'),
+                'birthday' => $request->get('birthday'),
+                'role' => $request->get('role'),
+            ];
+            
+            if ($request->hasFile('avatar')) {
+                
+                $destinationDir = public_path('user/product');
+                $fileName = uniqid('avatar').'.'.$request->avatar->extension();
+                $request->avatar->move($destinationDir, $fileName);
+                $attr['avatar'] = '/user/product/'.$fileName;
+            }
+            $users = User::create($attr);
+            return redirect()->route('admin.users.index')->with('alert', trans('setting.add_user_success'));    
+        }else {
+            return redirect()->route('admin.users.index')->with('alert', trans('setting.check_password'));    
+        }
+        
     }
 
     /**
@@ -59,7 +86,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.users.edit');
+        $users = User::findOrFail($id);
+        return view('admin.users.edit', compact('users'));
     }
 
     /**
@@ -69,9 +97,36 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        $users = User::findOrFail($id);
+        $password = $request->password;
+        $repassword = $request->repassword;
+        if ($password == $repassword) {
+            $attr = [
+                'name' => $request->get('name'),
+                'email' => $request->get('email'),
+                'password' => bcrypt($request->get('password')),
+                'address' => $request->get('address'),
+                'phone' => $request->get('phone'),
+                'birthday' => $request->get('birthday'),
+                'role' => $request->get('role'),
+            ];
+            
+            if ($request->hasFile('avatar')) {
+                
+                $destinationDir = public_path('user/product');
+                $fileName = uniqid('avatar').'.'.$request->avatar->extension();
+                $request->avatar->move($destinationDir, $fileName);
+                $attr['avatar'] = '/user/product/'.$fileName;
+            } else {
+                $attr['avatar'] = $users->avatar;
+            }
+            $users = User::update($attr);
+            return redirect()->route('admin.users.index')->with('alert', trans('setting.edit_user_success'));    
+        }else {
+            return redirect()->route('admin.users.index')->with('alert', trans('setting.check_password'));    
+        }
     }
 
     /**

@@ -25,4 +25,7 @@ return [
     'role_min' => 'role Quá Ngắn! Bạn vui lòng nhập role lớn hơn 3 ký tự!',
     'role_max' => 'role Quá Dài! Bạn vui lòng nhập role nhỏ hơn 50 ký tự!',
     'role_numeric' => 'Role Bạn Nhập Không Phải Kiểu Số!',
+    'add_user_success' => 'Thêm Người Dùng Thành Công!',
+    'check_password' => 'Password và Repassword Không trùng nhau! Vui lòng nhập lại!',
+    'edit_user_success' => 'Sửa Người Dùng Thành Công!',
 ];

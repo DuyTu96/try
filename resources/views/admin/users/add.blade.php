@@ -25,49 +25,57 @@
                                         <div class="row justify-content-center" style="margin-bottom:40px">
 
                                             <div class="col-md-8 col-lg-8 col-lg-offset-2">
-                                                <div class="form-group">
-                                                    <label>Name</label>
-                                                    <input type="full" name="name" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Email</label>
-                                                    <input type="email" name="email" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Password</label>
-                                                    <input type="password" name="password" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Repassword</label>
-                                                    <input type="password" name="repassword" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Avatar</label>
-                                                    <input type="file" name="avatar" class="form-control">
-                                                </div>
-                                                <div class="form-group">
+                                                <form action="{{ route('admin.users.create') }}" method="post"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
+                                                    @if ($errors->any())
+                                                    <div class="alert alert-danger">
+                                                        {{ $errors->first() }}</div>
+                                                    @endif
+                                                    <div class="form-group">
+                                                        <label>Name</label>
+                                                        <input type="full" name="name" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Email</label>
+                                                        <input type="email" name="email" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Password</label>
+                                                        <input type="password" name="password" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Repassword</label>
+                                                        <input type="password" name="repassword" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Avatar</label>
+                                                        <input type="file" name="avatar" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label>Birthday</label>
                                                         <input type="date" name="birthday" class="form-control">
                                                     </div>
-                                                <div class="form-group">
-                                                    <label>Address</label>
-                                                    <input type="address" name="address" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Phone</label>
-                                                    <input type="phone" name="phone" class="form-control">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Role</label>
-                                                    <select name="role" class="form-control">
-                                                        <option selected value="1">User</option>
-                                                        <option value="2">Admin</option>
-                                                    </select>
-                                                </div>
-                                                <button class="btn btn-success" type="submit">Thêm thành
-                                                    viên</button>
-                                                <button class="btn btn-danger" type="reset">Huỷ
-                                                    bỏ</button>
+                                                    <div class="form-group">
+                                                        <label>Address</label>
+                                                        <input type="address" name="address" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Phone</label>
+                                                        <input type="phone" name="phone" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Role</label>
+                                                        <select name="role" class="form-control">
+                                                            <option selected value="1">User</option>
+                                                            <option value="2">Admin</option>
+                                                        </select>
+                                                    </div>
+                                                    <button class="btn btn-success" type="submit">Thêm thành
+                                                        viên</button>
+                                                    <button class="btn btn-danger" type="reset">Huỷ
+                                                        bỏ</button>
+                                                </form>
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>

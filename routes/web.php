@@ -25,6 +25,8 @@ Route::group([
     Route::get('/users/index','Admin\UserController@index')->name('admin.users.index');
     Route::get('/users/create','Admin\UserController@create')->name('admin.users.create');
     Route::get('/users/edit/{id}','Admin\UserController@edit')->name('admin.users.edit');
+    Route::post('/users/create','Admin\UserController@store');
+    Route::post('/users/edit/{id}','Admin\UserController@update');
     //categories
     Route::get('/categories/index','Admin\CategoryController@index')->name('admin.categories.index');
     Route::get('/categories/create','Admin\CategoryController@create')->name('admin.categories.create');
