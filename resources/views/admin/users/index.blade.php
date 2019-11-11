@@ -22,6 +22,10 @@
                         <div class="bootstrap-table">
                             <div class="table-responsive">
                                 <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Thêm Thành viên</a>
+                                <hr>
+                                @if (session('alert'))
+                                <div class="alert alert-success">{{ session('alert') }}</div>
+                                @endif
                                 <table class="table table-bordered" style="margin-top:20px;">
 
                                     <thead>
@@ -45,20 +49,22 @@
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->address }}</td>
                                             <td>{{ $user->phone }}</td>
-                                            <td><img style="width: 100px; height: 100px;" src="{{ $user->avatar }}" alt=""></td>
+                                            <td><img style="width: 60px; height: 60px;" src="{{ $user->avatar }}"
+                                                    alt=""></td>
                                             <td>{{ $user->birthday }}</td>
                                             <td>
                                                 @if ($user->role == 1)
-                                                    User
+                                                User
                                                 @else
-                                                    Admin
+                                                Admin
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning"><i class="fa fa-pencil"
-                                                        aria-hidden="true"></i> Sửa</a>
-                                                <a href="#" class="btn btn-danger"><i class="fa fa-trash"
-                                                        aria-hidden="true"></i> Xóa</a>
+                                                <a href="{{ route('admin.users.edit', $user->id) }}"
+                                                    class="btn btn-warning"><i class="fas fa-edit"
+                                                        aria-hidden="true"></i></a>
+                                                <a href="{{ route('admin.users.delete', $user->id) }}"><button onclick="return conformDelete()" class="btn btn-danger"><i class="fa fa-trash"
+                                                    aria-hidden="true"></i></button></a>
                                             </td>
                                         </tr>
                                         @empty

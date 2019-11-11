@@ -25,8 +25,9 @@
                                         <div class="row justify-content-center" style="margin-bottom:40px">
 
                                             <div class="col-md-8 col-lg-8 col-lg-offset-2">
-                                                <form action="{{ route('admin.users.edit', $users->id) }}" method="post"
+                                                <form action="" method="post"
                                                     enctype="multipart/form-data">
+                                                    @method('PUT')
                                                     @csrf
                                                     @if ($errors->any())
                                                     <div class="alert alert-danger">
@@ -45,10 +46,6 @@
                                                     <div class="form-group">
                                                         <label>Password</label>
                                                         <input type="password" name="password" class="form-control">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Repassword</label>
-                                                        <input type="password" name="repassword" class="form-control">
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Avatar</label>

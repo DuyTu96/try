@@ -95,7 +95,7 @@
     <script href="{{ asset('bower_components/popper.js/dist/umd/popper.js') }}"></script>
     <script>
         function conformDelete() {
-            var conf = confirm("Bạn có chắc chắn xóa sản phẩm này hay ko?");
+            var conf = confirm("Bạn có chắc chắn muốn xóa ?");
             return conf;
         }
     </script>

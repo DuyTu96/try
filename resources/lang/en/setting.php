@@ -28,4 +28,6 @@ return [
     'add_user_success' => 'Thêm Người Dùng Thành Công!',
     'check_password' => 'Password và Repassword Không trùng nhau! Vui lòng nhập lại!',
     'edit_user_success' => 'Sửa Người Dùng Thành Công!',
+    'delete_user_success' => 'Xóa Người Dùng Thành Công!',
+    'add_product_success' => 'Thêm Sản Phẩm Thành Công!',
 ];

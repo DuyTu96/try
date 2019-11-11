@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\Category;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -14,7 +17,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('admin.products.index');
+        $products = Product::all();
+        return view('admin.products.index', compact('products'));
     }
 
     /**
@@ -24,7 +28,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.products.create');
+        $categories = Category::all();
+        return view('admin.products.add', compact('categories'));
     }
 
     /**
@@ -33,9 +38,26 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $products = New Product;
+        $attr = [
+            'category_id' => $request->get('category_id'),
+            'name' => $request->get('name'),
+            'price' => $request->get('price'),
+            'is_highlight' => $request->get('is_highlight'),
+            'quantity' => $request->get('quantity'),
+            'description' => $request->get('description'),
+        ];
+        if ($request->hasFile('images')) {  
+            $destinationDir = public_path('images/product');
+            $fileName = uniqid('imageproduct').'.'.$request->images->extension();
+            $request->images->move($destinationDir, $fileName);
+            $attr['images'] = '/images/product/'.$fileName;
+        }
+        
+        $products->create($attr);
+        return redirect()->route('admin.products.index')->with('alert', trans('setting.add_product_success'));
     }
 
     /**
@@ -57,7 +79,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.products.edit');
+        $categories = Category::all();
+        $products = Product::findOrFail($id);
+        return view('admin.products.edit',compact('categories','products'));
     }
 
     /**
@@ -67,9 +91,26 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        //
+       $products = Product::findOrFail($id);
+       $arrt = [
+        'category_id' => $request->get('category_id'),
+        'name' => $request->get('name'),
+        'price' => $request->get('price'),
+        'is_highlight' => $request->get('is_highlight'),
+        'quantity' => $request->get('quantity'),
+        'description' => $request->get('description'),
+       ];
+    //    if ($request->hasFile('images')) {  
+        // $destinationDir = public_path('images/product');
+        // $fileName = uniqid('imageproduct').'.'.$request->images->extension();
+        // $request->images->move($destinationDir, $fileName);
+        // $attr['images'] = '/images/product/'.$fileName;
+        
+        // }
+        dd($attr);
+        dd('oke');
     }
 
     /**

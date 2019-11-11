@@ -34,6 +34,7 @@
                                                                     <div class="col-md-5">
                                                                         <form action="{{ route('admin.categories.edit', $categories->id) }}" method="post">
                                                                             @csrf
+                                                                            @method('PUT')
                                                                         <div class="form-group">
                                                                             <label for="">Sửa Danh mục</label>
                                                                             <input type="text" class="form-control"

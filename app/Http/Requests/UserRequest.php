@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required|min:1|max:50',
-            'email' => 'required|email|min:3|max:50|unique:users',
+            'email' => 'required|email|min:3|max:50|unique:users,email,'.$this->id,
             'password' => 'required|min:8|max:20',
             'address' => 'required',
             'phone' => 'required|numeric',

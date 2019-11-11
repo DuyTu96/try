@@ -54,15 +54,17 @@ class UserController extends Controller
             
             if ($request->hasFile('avatar')) {
                 
-                $destinationDir = public_path('user/product');
+                $destinationDir = public_path('user/avatar');
                 $fileName = uniqid('avatar').'.'.$request->avatar->extension();
                 $request->avatar->move($destinationDir, $fileName);
-                $attr['avatar'] = '/user/product/'.$fileName;
+                $attr['avatar'] = '/user/avatar/'.$fileName;
             }
             $users = User::create($attr);
+
             return redirect()->route('admin.users.index')->with('alert', trans('setting.add_user_success'));    
-        }else {
-            return redirect()->route('admin.users.index')->with('alert', trans('setting.check_password'));    
+        }
+        else {
+            return redirect()->route('admin.users.create')->with('alert', trans('setting.check_password'));    
         }
         
     }
@@ -99,34 +101,27 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-        $users = User::findOrFail($id);
-        $password = $request->password;
-        $repassword = $request->repassword;
-        if ($password == $repassword) {
-            $attr = [
-                'name' => $request->get('name'),
-                'email' => $request->get('email'),
-                'password' => bcrypt($request->get('password')),
-                'address' => $request->get('address'),
-                'phone' => $request->get('phone'),
-                'birthday' => $request->get('birthday'),
-                'role' => $request->get('role'),
-            ];
-            
-            if ($request->hasFile('avatar')) {
-                
-                $destinationDir = public_path('user/product');
-                $fileName = uniqid('avatar').'.'.$request->avatar->extension();
-                $request->avatar->move($destinationDir, $fileName);
-                $attr['avatar'] = '/user/product/'.$fileName;
-            } else {
-                $attr['avatar'] = $users->avatar;
-            }
-            $users = User::update($attr);
-            return redirect()->route('admin.users.index')->with('alert', trans('setting.edit_user_success'));    
+        $users = User::findOrFail($id);    
+        $attr = [
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => bcrypt($request->get('password')),
+            'address' => $request->get('address'),
+            'phone' => $request->get('phone'),
+            'birthday' => $request->get('birthday'),
+            'role' => $request->get('role'),
+        ];
+        if ($request->hasFile('avatar')) {  
+            $destinationDir = public_path('user/avatar');
+            $fileName = uniqid('avatar').'.'.$request->avatar->extension();
+            $request->avatar->move($destinationDir, $fileName);
+            $attr['avatar'] = '/user/avatar/'.$fileName;
         }else {
-            return redirect()->route('admin.users.index')->with('alert', trans('setting.check_password'));    
+            $attr['avatar'] = $users->avatar;
         }
+        $users->update($attr);
+
+        return redirect()->route('admin.users.index')->with('alert', trans('setting.edit_user_success'));
     }
 
     /**
@@ -137,6 +132,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $users = User::findOrFail($id);
+        $users->delete();
+
+        return redirect()->route('admin.users.index')->with('alert', trans('setting.delete_user_success'));
     }
 }
