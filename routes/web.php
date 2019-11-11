@@ -12,7 +12,7 @@
 */
 
 //Client
-Route::get('/','HomeController@indexx');
+Route::get('/','ClientController@index');
 
 Auth::routes();
 //admin
