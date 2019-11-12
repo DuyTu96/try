@@ -30,4 +30,6 @@ return [
     'edit_user_success' => 'Sửa Người Dùng Thành Công!',
     'delete_user_success' => 'Xóa Người Dùng Thành Công!',
     'add_product_success' => 'Thêm Sản Phẩm Thành Công!',
+    'edit_product_success' => 'Sửa Sản Phẩm Thành Công!',
+    'delete_product_success' => 'Xóa Sản Phẩm Thành Công!',
 ];

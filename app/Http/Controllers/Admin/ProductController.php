@@ -10,6 +10,7 @@ use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
+    const PER_PAGE = 15;
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::latest()->with('category')->paginate(self::PER_PAGE);
         return view('admin.products.index', compact('products'));
     }
 
@@ -94,7 +95,7 @@ class ProductController extends Controller
     public function update(ProductRequest $request, $id)
     {
        $products = Product::findOrFail($id);
-       $arrt = [
+       $attr = [
         'category_id' => $request->get('category_id'),
         'name' => $request->get('name'),
         'price' => $request->get('price'),
@@ -102,15 +103,17 @@ class ProductController extends Controller
         'quantity' => $request->get('quantity'),
         'description' => $request->get('description'),
        ];
-    //    if ($request->hasFile('images')) {  
-        // $destinationDir = public_path('images/product');
-        // $fileName = uniqid('imageproduct').'.'.$request->images->extension();
-        // $request->images->move($destinationDir, $fileName);
-        // $attr['images'] = '/images/product/'.$fileName;
-        
-        // }
-        dd($attr);
-        dd('oke');
+       if ($request->hasFile('images')) {  
+        $destinationDir = public_path('images/product');
+        $fileName = uniqid('imageproduct').'.'.$request->images->extension();
+        $request->images->move($destinationDir, $fileName);
+        $attr['images'] = '/images/product/'.$fileName;
+        }else {
+            $attr['images'] = $products->images;
+        }
+        $products->update($attr);
+
+        return redirect()->route('admin.products.index')->with('alert', trans('setting.edit_product_success'));
     }
 
     /**
@@ -121,6 +124,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $products = Product::findOrFail($id);
+        $products->delete();
+
+        return redirect()->route('admin.products.index')->with('alert', trans('setting.delete_product_success'));
     }
 }

@@ -21,6 +21,9 @@
                         <div class="bootstrap-table">
                             <div class="table-responsive">
                                 {{-- alert --}}
+                                @if (session('alert'))
+                                    <div class="alert alert-success">{{ session('alert') }}</div>
+                                @endif
                                 <a href="{{ route('admin.products.create') }}" class="btn btn-primary">Thêm sản phẩm</a>
                                 <table class="table table-bordered" style="margin-top:20px;">
 
@@ -58,12 +61,14 @@
                                                 @endif
 
                                             </td>
-                                            <td>{{ $product->category_id }}</td>
+                                            <td>
+                                                {{ $product->category->name }}
+                                            </td>
                                             <td>
                                                 <a href="{{ route('admin.products.edit', $product->id) }}"
                                                     class="btn btn-warning"><i class="fas fa-edit"
                                                     aria-hidden="true"></i></a>
-                                                <a href="#" class="btn btn-danger"><i class="fa fa-trash"
+                                                <a href="{{ route('admin.products.delete', $product->id) }}" class="btn btn-danger"><i class="fa fa-trash"
                                                         aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
