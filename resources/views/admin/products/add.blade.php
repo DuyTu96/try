@@ -78,7 +78,7 @@
                                                                                 onchange="changeImg(this)">
                                                                             <img id="avatar" class="thumbnail"
                                                                                 width="100%" height="350px"
-                                                                                src="img/import-img.png">
+                                                                                src="/assets/admin/images/imgimport.jpg">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12">
@@ -136,3 +136,24 @@
 </div>
 <!-- /#wrapper -->
 @endsection
+@push('js')
+<script>
+    function changeImg(input){
+            //Nếu như tồn thuộc tính file, đồng nghĩa người dùng đã chọn file mới
+            if(input.files && input.files[0]){
+                var reader = new FileReader();
+                //Sự kiện file đã được load vào website
+                reader.onload = function(e){
+                    //Thay đổi đường dẫn ảnh
+                    $('#avatar').attr('src',e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $(document).ready(function() {
+            $('#avatar').click(function(){
+                $('#img').click();
+            });
+        });
+</script>
+@endpush

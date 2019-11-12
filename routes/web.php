@@ -41,6 +41,8 @@ Route::group([
     Route::get('/products/edit/{id}','Admin\ProductController@edit')->name('admin.products.edit');
     Route::post('/products/create','Admin\ProductController@store');
     Route::put('/products/edit/{id}','Admin\ProductController@update');
+    Route::get('/products/delete/{id}','Admin\ProductController@destroy')->name('admin.products.delete');
+
     //orders
     Route::get('/orders/index','Admin\OrderController@index')->name('admin.orders.index');
     Route::get('/orders/create','Admin\OrderController@create')->name('admin.orders.create');
